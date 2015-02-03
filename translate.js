@@ -7,7 +7,7 @@ module.exports = {
         while(body.indexOf(',,') > -1) {
           body = body.replace(/(\,|\[),/, '$1')
         }
-        callback(JSON.parse(body)[0][0][0])
+        callback(JSON.parse(body)[0][0][0].replace(',', ''))
       } else {
         console.log(error)
       }

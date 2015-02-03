@@ -27,10 +27,13 @@ module.exports = {
     }
   , printStatus: function (status) {
       var self = this
-      status = status > 100 ? 100 : status
-      self.goBackInStdoutBy((self.lastStatus+'').length + 1)
-      process.stdout.write(status + '%')
-      self.lastStatus = status
+      if(status > 100) {
+        process.stdout.write('\nDone!!!!!!!!!!!!!!!111  !\n')
+      } else {
+        self.goBackInStdoutBy((self.lastStatus+'').length + 1)
+        process.stdout.write(status + '%')
+        self.lastStatus = status
+      }
     }
   , goBackInStdoutBy: function (thisNr) {
       if(thisNr > 0) {
