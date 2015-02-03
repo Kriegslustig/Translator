@@ -13,6 +13,7 @@ fs.readFile(fileToOpen, 'UTF-8', function (err, rawCsv) {
     var allRows = rawCsv.split('\n')
     progessBar.max = allRows.length
     progessBar.autoSetStepSize()
+    progessBar.init()
     var csvArr = []
 
     var csvHeader = allRows.shift()
