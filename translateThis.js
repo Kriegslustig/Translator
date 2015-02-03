@@ -1,20 +1,22 @@
 var fs = require('fs')
 var translate = require('./translate.js')
-var progessBar = {}
-progessBar._proto_ = require('./progess.js').progressReporter
+var progress = require('./progess.js')
 
-var fileToOpen = 'Gold_Pre-First_Wordlist/table_1.csv'
+var progessBar = Object.create(progress.progressReporter)
+
+var fileToOpen = 'data/Gold_Pre-First_Wordlist/table_1.csv'
 var fileToSaveTo = 'translaterod.csv'
 
 
 fs.readFile(fileToOpen, 'UTF-8', function (err, rawCsv) {
   if(!err) {
     var allRows = rawCsv.split('\n')
+    progessBar.max = allRows.length
+    progessBar.autoSetStepSize()
     var csvArr = []
 
     var csvHeader = allRows.shift()
     csvHeader += ',Deutsch'
-    console.log(csvHeader)
 
     fs.writeFile(fileToSaveTo, csvHeader, function (err) {
       if(err) {
@@ -34,11 +36,13 @@ fs.readFile(fileToOpen, 'UTF-8', function (err, rawCsv) {
             if(err) {
               console.log(err)
             } else {
-              console.log(i + ' lines of ' + csvArr.length + ' written')
+              progessBar.add(1)
             }
           })
         })
       }
     })
+  } else {
+    console.log(err)
   }
 })
